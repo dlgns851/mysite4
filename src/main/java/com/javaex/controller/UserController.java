@@ -37,10 +37,8 @@ public class UserController {
 			return "main/index";
 		}
 		else {
-			String flag="1";
-			model.addAttribute(flag);
-			return "user/loginform";
-			//return "redirect:/user/loginform?flag=1";
+			
+			return "redirect:/user/loginform?flag=1";
 		}
 	
 		
