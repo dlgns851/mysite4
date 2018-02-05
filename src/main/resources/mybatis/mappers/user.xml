@@ -16,4 +16,35 @@ where email = #{email} and password = #{password}
 
 </select>
 
+<insert id="insertUser" parameterType="com.javaex.vo.UserVo" >
+<![CDATA[
+ 
+ insert into users values (seq_users_no.nextval, #{name},#{email} ,#{password},#{gender})
+	
+
+		
+]]>
+</insert>
+
+<delete id="delete" parameterType="map" >
+<![CDATA[
+delete from guestbook where no=#{no} and password=#{password}
+]]>
+</delete>
+
+<update id="modifyUser" parameterType="com.javaex.vo.UserVo" > 
+
+<![CDATA[
+update USERS 		set NAME=#{name},email=#{email},PASSWORD=#{password},gender=#{gender}
+					where NO=#{no}
+		
+]]>
+</update>
+
 </mapper>
+
+
+
+
+
+	

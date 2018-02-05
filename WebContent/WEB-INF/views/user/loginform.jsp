@@ -29,7 +29,7 @@
 						<input name="password" type="password" value="">
 						
 								
-								<c:if test="${flag==1}">
+								<c:if test="${param.flag==1}">
 								<P>로그인이 실패했습니다. 다시입력해주세요</P>
 								</c:if>
 						

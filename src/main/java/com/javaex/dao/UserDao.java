@@ -22,4 +22,16 @@ public class UserDao {
 		
 		return  sqlSession.selectOne("user.selectUserByEmailPw",map);
 	}
+	
+	public void joinUser(UserVo userVo) {
+		
+		 sqlSession.insert("user.insertUser",userVo );
+	}
+	
+	public void modifyUser(UserVo userVo) {
+		
+		
+		 sqlSession.update("user.modifyUser",userVo);
+	}
+	
 }

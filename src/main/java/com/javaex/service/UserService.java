@@ -17,4 +17,16 @@ public class UserService {
 		
 		return userDao.getUser(email,password);
 	}
+	
+	public void join(UserVo userVo) {
+		
+		userDao.joinUser(userVo);
+		
+	}
+	
+	public void modify(UserVo userVo) {
+		
+		userDao.modifyUser(userVo);
+		
+	}
 }

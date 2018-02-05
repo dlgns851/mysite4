@@ -39,10 +39,10 @@
 					<c:forEach items="${list }" var="vo">
 						<tr>
 							<td>${vo.no }</td>
-							<td><a href="board?a=view&no=${vo.no }&count=${vo.count}">${vo.title }</a></td>
+							<td><a href="${pageContext.request.contextPath }/board/view?no=${vo.no }&count=${vo.count}">${vo.title }</a></td>
 							<td>${vo.name }</td>
 							<td>${vo.count }</td>
-							<td>${vo.date }</td>
+							<td>${vo.regDate }</td>
 
 							<c:if test="${vo.userNo==authUser.no }">
 								<td><a href="board?a=delete&no=${vo.no }" class="del">삭제</a></td>
@@ -55,7 +55,7 @@
 
 
 				</table>
-				<div class="pager">
+				<%-- <div class="pager">
 					<ul>
 						<c:if test="${paging.getCur_Page()!=1}">
 							<li><a href="board?a=list&page=${paging.getCur_Page()-1}">◀</a></li>
@@ -80,11 +80,11 @@
 
 						<li><a href="board?a=list&page=${paging.getCur_Page()+1}">▶</a></li>
 					</ul>
-				</div>
+				</div> --%>
 
 				<c:if test="${authUser!=null }">
 					<div class="bottom">
-						<a href="board?a=writeform" id="new-book">글쓰기</a>
+						<a href="${pageContext.request.contextPath }/board/writeform" id="new-book">글쓰기</a>
 					</div>
 				</c:if>
 			</div>

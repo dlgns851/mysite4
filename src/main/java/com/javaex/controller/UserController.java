@@ -1,12 +1,10 @@
 package com.javaex.controller;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -27,7 +25,7 @@ public class UserController {
 	
 	@RequestMapping("login")
 	public String login(@RequestParam("email") String email, @RequestParam("password") String password,
-						HttpSession session,Model model) {
+						HttpSession session) {
 		
 		
 		UserVo authUser = userService.login(email, password);
@@ -40,8 +38,71 @@ public class UserController {
 			
 			return "redirect:/user/loginform?flag=1";
 		}
+		
+	}
 	
+	@RequestMapping("joinform")
+	public String joinForm() {
+		
+		return "user/joinform";
+		
+	}
+	@RequestMapping("join")
+	public String join(@ModelAttribute UserVo newUserVo) {
+		
+		userService.join(newUserVo);
+		return "redirect:/user/joinsuccessform?name="+newUserVo.getName();
 		
 		
 	}
+	
+	@RequestMapping("joinsuccessform")
+	public String joinSuccessForm() {
+		return "user/joinsuccess";
+	}
+	
+	
+	@RequestMapping("modify") 
+	public String modify(HttpSession session,
+			@ModelAttribute UserVo newUserVo ){
+		
+	
+		
+		UserVo userVo = (UserVo)session.getAttribute("authUser");
+		int no;
+		if(userVo==null) {
+			return "user/loginform";
+		}
+		else {
+		no= userVo.getNo();
+		
+		newUserVo.setNo(no);
+		userService.modify(newUserVo);
+			
+		session.setAttribute("authUser", newUserVo); //세션수정 
+		return "redirect:/main";
+		}
+		
+	}
+	
+	
+	@RequestMapping("modifyform")
+	public String modifyForm(HttpSession session) {
+		UserVo userVo=(UserVo)session.getAttribute("authUser");
+		
+		if(userVo==null)
+			return("user/loginform");
+			
+		else
+		return "user/modifyform";
+	}
+	
+	@RequestMapping("logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("authUser");
+		session.invalidate();
+		
+		return "redirect:/main";
+	}
+	
 }
