@@ -57,7 +57,9 @@ public class BoardController {
 		   // 로그인된 사용자의 no를 게시물의 userno에 넣는다 
 		System.out.println("선택된 글번호"+boardVo.getNo());
 		BoardVo view = boardService.selectView(boardVo);
-		//model.addAttribute(view); 
+		//model.addAttribute(view);     // jsp 에서 view.title 로 못읽음    이형식으로 보낸거 어떻게 읽음 ? 
+		
+		
 		model.addAttribute("view", view);
 		
 		return "/board/view";
