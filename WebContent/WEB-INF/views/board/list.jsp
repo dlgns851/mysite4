@@ -21,7 +21,7 @@
 
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="board?a=list" method="post">
+				<form id="search_form" action="${pageContext.request.contextPath }/board/list" method="post">
 					<input type="text" id="kwd" name="searchword" value=""> <input
 						type="submit" value="찾기">
 				</form>
@@ -45,7 +45,7 @@
 							<td>${vo.regDate }</td>
 
 							<c:if test="${vo.userNo==authUser.no }">
-								<td><a href="board?a=delete&no=${vo.no }" class="del">삭제</a></td>
+								<td><a href="${pageContext.request.contextPath }/board/delete?no=${vo.no }&userNo=${vo.userNo}" class="del">삭제</a></td>
 							</c:if>
 						</tr>
 					</c:forEach>

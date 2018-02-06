@@ -37,10 +37,10 @@
 					</tr>
 				</table>
 				<div class="bottom">
-					<a href="board?a=list">글목록</a>
+					<a href="${pageContext.request.contextPath }/board/list">글목록</a>
 					
 					<c:if test="${view.userNo==authUser.no }"> 
-					<a href="board?a=modifyform&no=${view.no}">글수정</a>
+					<a href="${pageContext.request.contextPath }/board/modifyform?no=${view.no}">글수정</a>
 					</c:if>
 					
 				</div>

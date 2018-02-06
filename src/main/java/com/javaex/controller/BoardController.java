@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.javaex.dao.BoardDao;
 import com.javaex.service.BoardService;
+
 import com.javaex.vo.BoardVo;
 import com.javaex.vo.UserVo;
 
@@ -24,9 +25,13 @@ public class BoardController {
 	BoardService boardService;
 	
 	@RequestMapping("list")
-	public String list(Model model) {
+	public String list(Model model,@RequestParam("searchword") String searchWord) { //searchword  없어서 안켜지는데 어케할지 고민 하면됨 
 		
-		model.addAttribute("list",boardService.getListAll());
+		
+		model.addAttribute("list",boardService.getListAll(searchWord));
+		
+	    
+		
 		
 		return "board/list";
 	}
@@ -55,15 +60,57 @@ public class BoardController {
 	public String view(@ModelAttribute BoardVo boardVo,Model model) {
 		// 마이바티스 쿼리문 파라미터타입에 인트를 넣는 문법 아직몰라서 임시로 vo로 받음 
 		   // 로그인된 사용자의 no를 게시물의 userno에 넣는다 
-		System.out.println("선택된 글번호"+boardVo.getNo());
+		
 		BoardVo view = boardService.selectView(boardVo);
 		//model.addAttribute(view);     // jsp 에서 view.title 로 못읽음    이형식으로 보낸거 어떻게 읽음 ? 
 		
+		
+		boardService.upHit(boardVo.getNo());
 		
 		model.addAttribute("view", view);
 		
 		return "/board/view";
 	}
+	@RequestMapping("modifyform")
+	public String modifyForm(@RequestParam("no") int no,Model model) {
+		
+		BoardVo view = boardService.selectView2(no);
+		model.addAttribute("view", view);
+		return "/board/modify";
+		
+	}
+	
+	@RequestMapping("modify")
+	public String modify(@ModelAttribute BoardVo boardVo,HttpSession session) {
+		UserVo authUser = (UserVo)session.getAttribute("authUser"); //우회접속한 사용자 차단을 위한 authuser
+		if(boardVo.getUserNo()!=authUser.getNo())
+			return "redirect:/user/loginform";
+			
+		
+		else {
+			boardService.modifyBoard(boardVo);
+			return "redirect:/board/view?no="+boardVo.getNo();
+			}
+		
+		
+	}
+	@RequestMapping("delete")
+	public String delete(@ModelAttribute BoardVo boardVo,HttpSession session) {
+		System.out.println(boardVo.toString());
+		UserVo authUser = (UserVo)session.getAttribute("authUser"); //우회접속한 사용자 차단을 위한 authuser
+		if(boardVo.getUserNo()!=authUser.getNo())
+			return "redirect:/user/loginform";
+			
+		
+		else {
+			boardService.deleteBoard(boardVo.getNo());
+			System.out.println("delete else문 진입 getNo출력"+boardVo.getNo());
+			return "redirect:/board/list";
+			}
+		
+		
+	}
+	
 	
 	
 	

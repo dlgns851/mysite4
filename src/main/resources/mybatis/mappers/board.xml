@@ -16,10 +16,32 @@ select bo.no no,bo.title title,us.name name,bo.hit count,bo.reg_date regDate,bo.
 ]]>
 
 </select>
+
+<select id="selectListAllSearch" parameterType="String"  resultType="com.javaex.vo.BoardVo">
+<![CDATA[
+
+   select bo.no no,bo.title title,us.name name,bo.hit count,bo.reg_date regDate,bo.content content,bo.user_no userNo
+						   from board bo,users us
+						   where bo.user_no = us.no
+                           and title like '%{searchWord}%'
+						   order by bo.reg_date desc
+
+]]>
+
+</select>
+
 <select id="selectView" parameterType="com.javaex.vo.BoardVo"  resultType="com.javaex.vo.BoardVo">
 <![CDATA[
 
-select title,content,user_no userNo from board where no=#{no}
+select no,title,content,user_no userNo from board where no=#{no}
+
+]]>
+
+</select>
+<select id="selectView2" parameterType="int"  resultType="com.javaex.vo.BoardVo">
+<![CDATA[
+
+select no,title,content,user_no userNo from board where no=#{no}
 
 ]]>
 
@@ -36,19 +58,36 @@ select title,content,user_no userNo from board where no=#{no}
 ]]>
 </insert>
 
-<delete id="delete" parameterType="map" >
+<delete id="deleteView" parameterType="int" >
 <![CDATA[
-delete from guestbook where no=#{no} and password=#{password}
+delete from board where no=#{no}
 ]]>
 </delete>
 
-<update id="modifyUser" parameterType="com.javaex.vo.UserVo" > 
+<update id="updateView" parameterType="com.javaex.vo.BoardVo" > 
 
 <![CDATA[
-update USERS 		set NAME=#{name},email=#{email},PASSWORD=#{password},gender=#{gender}
-					where NO=#{no}
+
+					
+					update board 
+					set title=#{title},content=#{content}  
+					where no=#{no}
 		
 ]]>
 </update>
+<update id="updateUpHit" parameterType="int" > 
+
+<![CDATA[
+
+					
+update board
+set hit= (select hit+1
+          from board
+          where no=#{no})
+where no=#{no}
+		
+]]>
+</update>
+
 
 </mapper>

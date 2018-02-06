@@ -29,6 +29,13 @@ public class BoardDao {
 		
 		return boardList;
 	}
+public List<BoardVo> getListAll(String searchWord) {
+		
+		
+		List<BoardVo> boardList = sqlSession.selectList("board.selectListAllSearch",searchWord);
+		
+		return boardList;
+	}
 	
 	public void insertBoard(BoardVo boardVo) {
 		
@@ -40,6 +47,24 @@ public class BoardDao {
 		System.out.println("받아온 쿼리문 확인 "+boardVo2.toString());
 		//return sqlSession.selectOne("board.selectView", boardVo);
 		return boardVo2;
+	}
+	public BoardVo selectView2(int no) {
+		
+		BoardVo boardVo2 = sqlSession.selectOne("board.selectView", no);
+		
+		System.out.println("받아온 쿼리문 확인 "+boardVo2.toString());
+		//return sqlSession.selectOne("board.selectView", boardVo);
+		return boardVo2;
+	}
+	
+	public void modifyBoard(BoardVo boardVo) {
+		sqlSession.update("board.updateView", boardVo);
+	}
+	public void deleteBoard(int no) {
+		sqlSession.update("board.deleteView", no);
+	}
+	public void upHit(int no) {
+		sqlSession.update("board.updateUpHit", no);
 	}
 	
 	
