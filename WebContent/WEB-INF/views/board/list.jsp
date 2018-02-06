@@ -55,10 +55,10 @@
 
 
 				</table>
-				<%-- <div class="pager">
+				<div class="pager">
 					<ul>
 						<c:if test="${paging.getCur_Page()!=1}">
-							<li><a href="board?a=list&page=${paging.getCur_Page()-1}">◀</a></li>
+							<li><a href="${pageContext.request.contextPath }/board/list?page=${paging.getCur_Page()-1}">◀</a></li>
 						</c:if>
 
 						<c:forEach var="i" begin="${paging.getPage_Start()}"
@@ -66,21 +66,21 @@
 
 							<c:choose>
 								<c:when test="${i==paging.getCur_Page()}">
-									<li class="selected"><a href="board?a=list&page=${i}">
+									<li class="selected"><a href="${pageContext.request.contextPath }/board/list?page=${i}">
 											${i} </a></li>
 								</c:when>
 
 								<c:otherwise>
-									<li><a href="board?a=list&page=${i}"> ${i} </a></li>
+									<li><a href="${pageContext.request.contextPath }/board/list?page=${i}"> ${i} </a></li>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
 
 						
 
-						<li><a href="board?a=list&page=${paging.getCur_Page()+1}">▶</a></li>
+						<li><a href="${pageContext.request.contextPath }/board/list?page=${paging.getCur_Page()+1}">▶</a></li>
 					</ul>
-				</div> --%>
+				</div> 
 
 				<c:if test="${authUser!=null }">
 					<div class="bottom">

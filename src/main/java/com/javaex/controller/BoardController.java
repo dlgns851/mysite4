@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.javaex.dao.BoardDao;
 import com.javaex.service.BoardService;
-
+import com.javaex.util.Paging;
 import com.javaex.vo.BoardVo;
 import com.javaex.vo.UserVo;
 
@@ -25,12 +25,15 @@ public class BoardController {
 	BoardService boardService;
 	
 	@RequestMapping("list")
-	public String list(Model model,@RequestParam(value="searchword",required=false) String searchWord) { //searchword  없어서 안켜지는데 어케할지 고민 하면됨 
+	public String list(Model model,@RequestParam(value="searchword",required=false) String searchWord
+			,@RequestParam(value="page",required=false) String selectedPage) { //searchword  없어서 안켜지는데 어케할지 고민 하면됨 
 		
+		Paging paging =boardService.getPaging(selectedPage);
+	
+		model.addAttribute("list",boardService.getListAll(searchWord,paging));
+		model.addAttribute("paging",paging);
+
 		
-		model.addAttribute("list",boardService.getListAll(searchWord));
-		
-	    
 		
 		
 		return "board/list";

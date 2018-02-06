@@ -13,7 +13,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-
+import com.javaex.util.Paging;
 import com.javaex.vo.BoardVo;
 
 @Repository
@@ -29,6 +29,10 @@ public class BoardDao {
 		
 		return boardList;
 	}
+	
+	public int countRow() {
+		return sqlSession.selectOne("board.countRow");
+	}
 public List<BoardVo> getListAll(String searchWord) {
 		
 		
@@ -36,6 +40,14 @@ public List<BoardVo> getListAll(String searchWord) {
 		
 		return boardList;
 	}
+
+public List<BoardVo> getListAll(Paging paging) {
+	System.out.println(paging.toString());
+	
+	List<BoardVo> boardList = sqlSession.selectList("board.selectListAllPaging",paging);
+	
+	return boardList;
+}
 	
 	public void insertBoard(BoardVo boardVo) {
 		

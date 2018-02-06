@@ -17,6 +17,15 @@ select bo.no no,bo.title title,us.name name,bo.hit count,bo.reg_date regDate,bo.
 
 </select>
 
+<select id="countRow"  resultType="int">
+<![CDATA[
+
+select count(*) from board
+
+]]>
+
+</select>
+
 <select id="selectListAllSearch" parameterType="String"  resultType="com.javaex.vo.BoardVo">
 <![CDATA[
 
@@ -27,6 +36,25 @@ select bo.no no,bo.title title,us.name name,bo.hit count,bo.reg_date regDate,bo.
 						   order by bo.reg_date desc
 
 ]]>
+
+</select>
+
+<select id="selectListAllPaging" parameterType="com.javaex.util.Paging"  resultType="com.javaex.vo.BoardVo">
+<![CDATA[
+
+ select  no,title,name,hit,reg_date,content,user_no
+					from(					
+					select rownum rnum,no,title,name,hit,reg_date,content,user_no 
+					from (
+					select bo.no,bo.title,us.name,bo.hit,bo.reg_date,bo.content,bo.user_no
+					from BOARD bo, users us  
+					where bo.user_no=us.no
+					order by reg_date) )
+					where rnum >=#{writingStart} and rnum <= #{writingEnd}   
+					
+
+]]>
+  <!-- getwritesart   getwriteend 값 넣어주면 됨   함수로도 되는지 ?  안된다면 paging 의 변수에 추가해서 사용하는것과 혹은 따로 저값들을 넣어주는방법을 써야할듯 -->
 
 </select>
 
