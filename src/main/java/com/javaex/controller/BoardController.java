@@ -25,7 +25,7 @@ public class BoardController {
 	BoardService boardService;
 	
 	@RequestMapping("list")
-	public String list(Model model,@RequestParam("searchword") String searchWord) { //searchword  없어서 안켜지는데 어케할지 고민 하면됨 
+	public String list(Model model,@RequestParam(value="searchword",required=false) String searchWord) { //searchword  없어서 안켜지는데 어케할지 고민 하면됨 
 		
 		
 		model.addAttribute("list",boardService.getListAll(searchWord));
