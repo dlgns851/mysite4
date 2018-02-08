@@ -15,7 +15,7 @@
 		com.javaex.controller 패키지 밑에 있는 클래스 중에
 		@Controller를 달고 있는 클래스의 객체를 생성 하겠다. (new 하겠다)
 	 -->
-	<context:component-scan base-package="com.javaex.controller" />
+	<context:component-scan base-package="com.javaex.controller,com.javaex.api.controller" />
 
 <!-- 기본 뷰 리졸버 -->
 	<bean id="viewResolver"
@@ -28,5 +28,21 @@
 	</bean>
 	
 	<mvc:default-servlet-handler/>   <!-- 디스패처 서블릿의 핸들러매핑으로 찾지 못하는 녀석들을 원래 톰캣이 처리하게끔 해주는것 css,png등 불러오는것  -->
+	<mvc:annotation-driven>
+
+
+
+<mvc:message-converters>
+<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+<property name="supportedMediaTypes">
+<list>
+<value>application/json; charset=UTF-8</value>
+</list>
+</property>
+</bean>
+</mvc:message-converters>
+
+
+</mvc:annotation-driven>
 	<mvc:annotation-driven/>
 </beans>

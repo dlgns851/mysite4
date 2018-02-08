@@ -5,7 +5,7 @@
 
 
 <div id="header">
-			<a href="main"><h1>MySite</h1></a>
+			<a href="${pageContext.request.contextPath }/main"><h1>MySite</h1></a>
 			<ul>
 			
 			<c:if test="${authUser==null}">

@@ -35,7 +35,7 @@ public class BoardDao {
 	}
 public List<BoardVo> getListAll(String searchWord) {
 		
-		
+		System.out.println(searchWord);
 		List<BoardVo> boardList = sqlSession.selectList("board.selectListAllSearch",searchWord);
 		
 		return boardList;

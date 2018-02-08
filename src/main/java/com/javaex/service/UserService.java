@@ -29,4 +29,16 @@ public class UserService {
 		userDao.modifyUser(userVo);
 		
 	}
+	
+	public boolean emailCheck(String email) {
+		boolean result;
+		UserVo userVo = userDao.selectUser(email);
+		
+		if(userVo==null)
+			result= true;
+		else
+			result= false;
+		
+		return result;
+	}
 }

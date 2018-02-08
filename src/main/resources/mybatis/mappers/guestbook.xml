@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+
+<mapper namespace="guestbook">
+
+<select id="getList" resultType="com.javaex.vo.GuestVo">
+<![CDATA[
+select no,name,password,content,reg_date regDate
+from guestbook
+
+]]>
+</select>
+
+<select id="selectNew" parameterType="com.javaex.vo.GuestVo" resultType="com.javaex.vo.GuestVo">
+<![CDATA[
+select no,name,password,content,reg_date regDate
+from guestbook
+where name=#{name} and password=#{password} and content=#{content}
+
+]]>
+</select>
+
+ <insert id="insert" parameterType="com.javaex.vo.GuestVo" >
+<![CDATA[
+ INSERT INTO guestbook VALUES (seq_guestbook_no.nextval, #{name} ,#{password} , #{content},sysdate)
+]]>
+</insert>
+
+<delete id="delete2" parameterType="com.javaex.vo.GuestVo" >
+<![CDATA[
+delete from guestbook where no=#{no} and password=#{password}
+]]>
+</delete>
+
+
+<!-- rum>=(i-1)*5 +1
+rum<=i*5; //i는페이지   페이지 번호를 받아서 출력할 양 정함 
+ -->
+<select id="selectListByPage" parameterType="int" resultType="com.javaex.vo.GuestVo">
+<![CDATA[
+select rum,no,name,password,content,reg_date regDate
+from( 	select rownum rum,no,name,password,content,reg_date
+		from(select name,no,password, content,reg_date
+     		 from guestbook
+     		 order by reg_date desc))
+where rum >=(#{page}-1)*5+1 and rum<= #{page}*5
+
+]]>
+</select>
+
+
+<!-- <select id="getList" parameterType="기본자료형 또는 vo" resultType="com.javaex.vo.GuestVo">
+<![CDATA[
+select no,name,password,content,reg_date
+from guestbook
+
+]]>
+</select> -->
+
+
+
+
+<!-- <update id="식별자" parameterType="기본자료형 또는 vo" >
+
+</update>
+
+<delete id="식별자" parameterType="기본자료형 또는 vo" >
+
+</delete>  -->
+
+<!--  쿼리문 작성 --> 
+
+
+
+
+</mapper>

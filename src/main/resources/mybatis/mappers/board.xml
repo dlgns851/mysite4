@@ -32,7 +32,7 @@ select count(*) from board
    select bo.no no,bo.title title,us.name name,bo.hit count,bo.reg_date regDate,bo.content content,bo.user_no userNo
 						   from board bo,users us
 						   where bo.user_no = us.no
-                           and title like '%{searchWord}%'
+                           and title like '%#{value}%'
 						   order by bo.reg_date desc
 
 ]]>
@@ -42,14 +42,14 @@ select count(*) from board
 <select id="selectListAllPaging" parameterType="com.javaex.util.Paging"  resultType="com.javaex.vo.BoardVo">
 <![CDATA[
 
- select  no,title,name,hit,reg_date,content,user_no
+ select  no,title,name,hit count,reg_date regDate,content,user_no userNo
 					from(					
 					select rownum rnum,no,title,name,hit,reg_date,content,user_no 
 					from (
 					select bo.no,bo.title,us.name,bo.hit,bo.reg_date,bo.content,bo.user_no
 					from BOARD bo, users us  
 					where bo.user_no=us.no
-					order by reg_date) )
+					order by reg_date desc) )
 					where rnum >=#{writingStart} and rnum <= #{writingEnd}   
 					
 

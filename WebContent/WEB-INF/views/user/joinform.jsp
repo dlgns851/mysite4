@@ -6,6 +6,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link href="${pageContext.request.contextPath }/assets/css/user.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="${pageContext.request.contextPath }/assets/jquery/jquery-1.12.4.js"></script>
 	<title>Insert title here</title>
 </head>
 <body>
@@ -26,7 +27,9 @@
 	
 						<label class="block-label" for="email">이메일</label>
 						<input id="email" name="email" type="text" value="">
-						<input type="button" value="id 중복체크">
+						<input id="btnEmailCheck" type="button" value="id 중복체크">
+						<div id="checkMsg"> </div>
+						
 						
 						<label class="block-label">패스워드</label>
 						<input name="password" type="password" value="">
@@ -56,4 +59,81 @@
 	</div> <!-- /container -->
 
 </body>
+
+<!-- <script type="text/javascript">
+//리퀘스트파람으로 받을떄
+$("#btnEmailCheck").on("click",function(){
+	var email = $("#email").val();
+	
+	
+	$.ajax({
+		//줄때
+		url : "${pageContext.request.contextPath }/api/user/emailcheck",
+		type : "post",
+		//contentType : "application/json",  
+		//contentType : "text",
+		data : {email: email},
+		
+		
+		//받을때 데이터타입 
+		dataType : "json",
+		success : function(result){
+			
+			if(result==true){
+				$("#checkMsg").text("사용할 수 있는 이메일입니다.");
+			}
+			else
+				$("#checkMsg").text("존재하는 이메일입니다.");
+		/*성공시 처리해야될 코드 작성*/
+		},
+		/*연결실패시 */
+		error : function(XHR, status, error) {
+		console.error(status + " : " + error);
+		}
+		});
+	
+});
+</script> -->
+
+<script type="text/javascript">
+//리퀘스트바디로 받을때
+$("#btnEmailCheck").on("click",function(){
+	var email = $("#email").val();
+	var password = "1111";
+	
+	console.log(email);
+	
+	var userVo={
+			email:email,
+			password:password
+	}
+	
+	$.ajax({
+		//줄때
+		url : "${pageContext.request.contextPath }/api/user/emailcheck",
+		type : "post",
+		contentType : "application/json",  
+		//contentType : "text",
+		data : JSON.stringify(userVo),     //이렇게 보낼경우 리퀘스트? 리스폰스? 헤더영역에 들어감 
+		
+		
+		//받을때 데이터타입 
+		//dataType : "json",
+		success : function(result){
+			
+			if(result==true){
+				$("#checkMsg").text("사용할 수 있는 이메일입니다.");
+			}
+			else
+				$("#checkMsg").text("존재하는 이메일입니다.");
+		/*성공시 처리해야될 코드 작성*/
+		},
+		/*연결실패시 */
+		error : function(XHR, status, error) {
+		console.error(status + " : " + error);
+		}
+		});
+	
+});
+</script>
 </html>
