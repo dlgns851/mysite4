@@ -166,7 +166,8 @@ $(document).ready(function(){
 			success : function(no){
 				$("#del-pop").modal("hide");
 				
-				$("[id="+no+"]").remove();
+			
+				$("#"+no).remove();
 				
 				
 							
@@ -269,7 +270,7 @@ $("#btnWrite").on("click", function(){
 function render(guestVo, updown) {  //글이 위에서 붙을 수 있게 flag 로 updown 넣어놈 
 	
 	var str = "";
-	str += "<li id="+guestVo.no+">";
+	str += "<li id='"+guestVo.no+"'>";
 	str += "	<table>";
 	str += "     <tr>";
 	str += "		<td>["+guestVo.no+"]</td>";
